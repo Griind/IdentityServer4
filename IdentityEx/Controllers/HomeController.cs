@@ -58,14 +58,16 @@ namespace IdentityEx.Controllers
 
             if (result.Succeeded)
             {
-                var signInResult = await _signInManager.PasswordSignInAsync(user, password, false, false);
-                if (signInResult.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var link = Url.Action(nameof(VerifyEmail), "Home", new { userId = user.Id, code });
             }
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> VerifyEmail(string userId, string code)
+        {
+            return View();
+        }
+        public IActionResult EmailVerification => View();
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
