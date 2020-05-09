@@ -29,6 +29,12 @@ namespace IdentityEx
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Identity.Cookie";
+                config.LoginPath = "Home/Authenticate";
+            });
             //services.AddAuthentication("CookieAuth")
             //    .AddCookie("CookieAuth", config =>
             //    {
