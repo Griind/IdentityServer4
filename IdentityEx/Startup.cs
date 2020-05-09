@@ -19,7 +19,14 @@ namespace IdentityEx
                 config.UseInMemoryDatabase("MemDB");
             });
             //Registers the services.
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+            {
+                config.Password.RequiredLength = 4;
+                config.Password.RequireDigit = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonAlphanumeric = false;
+
+            })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
             //services.AddAuthentication("CookieAuth")
