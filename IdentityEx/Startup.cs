@@ -43,9 +43,11 @@ namespace IdentityEx
             services.ConfigureApplicationCookie(config =>
             {
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "Home/Authenticate";
+                config.LoginPath = "/Home/Authenticate";
             });
-            services.AddMailKit(config => config.UseMailKit(_configuration.GetSection("Email").Get<MailKitOptions>()));
+            
+            var con = _configuration.GetSection("Email").Get<MailKitOptions>();
+            services.AddMailKit(config => config.UseMailKit(con));
 
             //services.AddAuthentication("CookieAuth")
             //    .AddCookie("CookieAuth", config =>

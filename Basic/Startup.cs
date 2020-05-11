@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace Basic
 {
@@ -18,6 +20,16 @@ namespace Basic
                     config.Cookie.Name = "MyCookie";
                     config.LoginPath = "/Home/Authenticate";
                 });
+
+            services.AddAuthorization(config =>
+            {
+                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                var defaultAuthPolicy = defaultAuthBuilder
+                    .RequireAuthenticatedUser()
+                    .RequireClaim(ClaimTypes.DateOfBirth)
+                    .Build();
+                config.DefaultPolicy = defaultAuthPolicy;
+            });
 
             services.AddControllersWithViews();
         }

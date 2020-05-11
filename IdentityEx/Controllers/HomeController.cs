@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NETCore.MailKit.Core;
 using System.Threading.Tasks;
 
 namespace IdentityEx.Controllers
@@ -9,11 +10,15 @@ namespace IdentityEx.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IEmailService _emailService;
 
-        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public HomeController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
         public IActionResult Index()
         {
@@ -60,6 +65,8 @@ namespace IdentityEx.Controllers
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var link = Url.Action(nameof(VerifyEmail), "Home", new { userId = user.Id, code });
+                await _emailService.SendAsync("google@google.com", "email verify", link);
+                return RedirectToAction("EmailVerification");
             }
             return RedirectToAction("Index");
         }
@@ -67,7 +74,11 @@ namespace IdentityEx.Controllers
         {
             return View();
         }
-        public IActionResult EmailVerification => View();
+
+        public IActionResult EmailVerification() => View();
+
+        public IEmailService EmailService { get; }
+
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();

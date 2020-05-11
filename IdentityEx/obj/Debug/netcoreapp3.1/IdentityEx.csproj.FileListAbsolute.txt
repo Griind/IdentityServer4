@@ -127,3 +127,9 @@ C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreap
 C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\obj\Debug\netcoreapp3.1\Razor\Views\Home\EmailVerification.cshtml.g.cs
 C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\obj\Debug\netcoreapp3.1\Razor\Views\Home\VerifyEmail.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\obj\Debug\netcoreapp3.1\IdentityEx.csproj.CoreCompileInputs.cache
+C:\Users\griind2\source\repos\AuthIdentityServer4\IdentityEx\obj\Debug\netcoreapp3.1\IdentityEx.MvcApplicationPartsAssemblyInfo.cache
