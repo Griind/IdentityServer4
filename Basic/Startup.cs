@@ -1,5 +1,6 @@
 using Basic.AuthorizationRequirements;
 using Basic.Controllers;
+using Basic.CustomPolicyProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,7 @@ namespace Basic
                 });
             });
 
+            services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, CustomRequiredClaimHandler>();
             services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
 

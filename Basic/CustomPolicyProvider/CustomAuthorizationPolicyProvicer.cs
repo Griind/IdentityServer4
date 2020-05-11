@@ -66,10 +66,10 @@ namespace Basic.CustomPolicyProvider
             return Task.CompletedTask;
         }
     }
-    public class CustomAuthorizationPolicyProvicer
+    public class CustomAuthorizationPolicyProvider
         : DefaultAuthorizationPolicyProvider
     {
-        public CustomAuthorizationPolicyProvicer(IOptions<AuthorizationOptions> options) : base(options)
+        public CustomAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options) : base(options)
         {
         }
         public override Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
