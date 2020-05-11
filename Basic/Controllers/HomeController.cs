@@ -3,11 +3,31 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Basic.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
+
+        public HomeController(IAuthorizationService authorizationService)
+        {
+            _authorizationService = authorizationService;
+        }
+
+        public async Task<IActionResult> DoStuff()
+        {
+            var builder = new AuthorizationPolicyBuilder("Schema");
+            var customPolicy = builder.RequireClaim("Test").Build();
+            var authResult = await _authorizationService.AuthorizeAsync(User, customPolicy);
+            if (authResult.Succeeded)
+            {
+                return View("Index");
+            }
+            return View("Registration");
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -17,7 +37,7 @@ namespace Basic.Controllers
         {
             return View();
         }
-        [Authorize(Policy ="Claim.DoB")]
+        [Authorize(Policy = "Claim.DoB")]
         public IActionResult SecretPolicy()
         {
             return View("Secret");
@@ -46,7 +66,7 @@ namespace Basic.Controllers
             var userPrincipal = new ClaimsPrincipal(new[] { mainIdentity, licenseIdentity });
 
             HttpContext.SignInAsync(userPrincipal);
-    
+
             return RedirectToAction("Index");
         }
     }
