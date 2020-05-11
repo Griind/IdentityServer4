@@ -1,3 +1,4 @@
+using Basic.AuthorizationRequirements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,13 +24,20 @@ namespace Basic
 
             services.AddAuthorization(config =>
             {
-                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
-                var defaultAuthPolicy = defaultAuthBuilder
-                    .RequireAuthenticatedUser()
-                    .RequireClaim(ClaimTypes.DateOfBirth)
-                    .Build();
-                config.DefaultPolicy = defaultAuthPolicy;
+                //var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                //var defaultAuthPolicy = defaultAuthBuilder
+                //    .RequireAuthenticatedUser()
+                //    .RequireClaim(ClaimTypes.DateOfBirth)
+                //    .Build();
+                //config.DefaultPolicy = defaultAuthPolicy;
+
+                config.AddPolicy("Claim.DoB", policyBuilder =>
+                {
+                    policyBuilder.RequireCustomClaim(ClaimTypes.DateOfBirth);
+                });
             });
+
+            services.AddScoped<IAuthorizationHandler, CustomRequiredClaimHandler>();
 
             services.AddControllersWithViews();
         }

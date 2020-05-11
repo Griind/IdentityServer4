@@ -17,6 +17,16 @@ namespace Basic.Controllers
         {
             return View();
         }
+        [Authorize(Policy ="Claim.DoB")]
+        public IActionResult SecretPolicy()
+        {
+            return View("Secret");
+        }
+        [Authorize(Roles = "Admin")]
+        public IActionResult SecretRole()
+        {
+            return View("Secret");
+        }
         public IActionResult Authenticate()
         {
             var mainClaims = new List<Claim>()
