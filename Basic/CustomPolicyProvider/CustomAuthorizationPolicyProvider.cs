@@ -7,7 +7,14 @@ using System.Threading.Tasks;
 
 namespace Basic.CustomPolicyProvider
 {
-    //type
+    public class SecurityLevel : AuthorizeAttribute
+    {
+        public SecurityLevel(int level)
+        {
+            Policy = $"{DynamicPolicies.SecurityLevel}.{level}";
+        }
+    }
+        //{type}
     public static class DynamicPolicies
     {
         public static IEnumerable<string> Get()
@@ -59,7 +66,7 @@ namespace Basic.CustomPolicyProvider
             var claimValue = Convert.ToInt32(context.User.Claims
                 .FirstOrDefault(x => x.Type == DynamicPolicies.SecurityLevel)
                 ?.Value ?? "0");
-            if (claimValue >= requirement.Level)
+            if (claimValue <= requirement.Level)
             {
                 context.Succeed(requirement);
             }

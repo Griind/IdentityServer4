@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Basic.CustomPolicyProvider;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -32,21 +33,31 @@ namespace Basic.Controllers
         {
             return View();
         }
+
         [Authorize]
         public IActionResult Secret()
         {
             return View();
         }
+
         [Authorize(Policy = "Claim.DoB")]
         public IActionResult SecretPolicy()
         {
             return View("Secret");
         }
+
         [Authorize(Roles = "Admin")]
         public IActionResult SecretRole()
         {
             return View("Secret");
         }
+
+        [SecurityLevel(5)]
+        public IActionResult SecretLevel()
+        {
+            return View("Secret");
+        }
+
         public IActionResult Authenticate()
         {
             var mainClaims = new List<Claim>()
