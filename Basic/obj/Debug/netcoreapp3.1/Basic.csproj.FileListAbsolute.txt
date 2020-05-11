@@ -33,3 +33,8 @@ C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\
 C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Basic.Views.pdb
 C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Views\Home\Secret.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Pages\Razor\Index.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Pages\Razor\Secured.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Pages\RazorSecured\AnonP.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Pages\RazorSecured\Index.cshtml.g.cs
+C:\Users\griind2\source\repos\AuthIdentityServer4\Basic\obj\Debug\netcoreapp3.1\Razor\Pages\Razor\Policy.cshtml.g.cs

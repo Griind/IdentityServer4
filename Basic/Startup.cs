@@ -4,7 +4,6 @@ using Basic.CustomPolicyProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
@@ -45,7 +44,8 @@ namespace Basic
             services.AddScoped<IAuthorizationHandler, CustomRequiredClaimHandler>();
             services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
 
-            services.AddControllersWithViews(config=> {
+            services.AddControllersWithViews(config =>
+            {
                 var defaultAuthBuilder = new AuthorizationPolicyBuilder();
                 var defaultAuthPolicy = defaultAuthBuilder
                     .RequireAuthenticatedUser()
@@ -53,6 +53,15 @@ namespace Basic
                 //Global auth requirements;
                 //config.Filters.Add(new AuthorizeFilter(defaultAuthPolicy));
             });
+
+            services.AddRazorPages()
+                .AddRazorPagesOptions(congfig =>
+                {
+                    congfig.Conventions.AuthorizePage("/Razor/Secured");
+                    congfig.Conventions.AuthorizePage("/Razor/Policy");
+                    congfig.Conventions.AuthorizeFolder("/RazorSecured");
+                    congfig.Conventions.AllowAnonymousToPage("/RazorSecured/AnonP");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +80,7 @@ namespace Basic
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
             });
         }
     }
