@@ -45,5 +45,11 @@ namespace Server.Controllers
             var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(new { access_token = tokenJson });
         }
+        public IActionResult Decode(string part)
+        {
+            var bytes = Convert.FromBase64String(part);
+
+            return Ok(Encoding.UTF8.GetString(bytes));
+        }
     }
 }
