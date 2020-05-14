@@ -27,7 +27,8 @@ namespace Client
                     config.AuthorizationEndpoint = "https://localhost:44312/oauth/authorize";
                     config.TokenEndpoint = "https://localhost:44312/oauth/token";
                 });
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
 
         }
 
