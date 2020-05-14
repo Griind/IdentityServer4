@@ -41,7 +41,7 @@ namespace Client
                         OnCreatingTicket = context =>
                         {
                             var accessToken = context.AccessToken;
-                            var base64payload = accessToken.Split('.')[1];
+                            var base64payload = $"{accessToken.Split('.')[1]}=";
                             var bytes = Convert.FromBase64String(base64payload);
                             var jsonPayload = Encoding.UTF8.GetString(bytes);
                             var claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonPayload);
