@@ -42,9 +42,9 @@ namespace Client
                         {
                             var accessToken = context.AccessToken;
                             var base64payload = accessToken.Split('.')[1];
-                            var bytes = Convert.FromBase64String(accessToken);
+                            var bytes = Convert.FromBase64String(base64payload);
                             var jsonPayload = Encoding.UTF8.GetString(bytes);
-                            var claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonPayload)
+                            var claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonPayload);
                             foreach (var claim in claims)
                             {
                                 context.Identity.AddClaim(new Claim(claim.Key, claim.Value));
