@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Server
 {
@@ -12,7 +14,14 @@ namespace Server
             services.AddAuthentication("OAuth")
                 .AddJwtBearer("OAuth", config =>
                 {
-
+                    var bytes = Encoding.UTF8.GetBytes(Constants.Secret);
+                    var key = new SymmetricSecurityKey(bytes);
+                    config.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Constants.Issuer,
+                        ValidAudience = Constants.Audience,
+                        IssuerSigningKey = key,
+                    };
                 });
 
 
