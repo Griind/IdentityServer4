@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Server
 {
@@ -16,6 +18,18 @@ namespace Server
                 {
                     var bytes = Encoding.UTF8.GetBytes(Constants.Secret);
                     var key = new SymmetricSecurityKey(bytes);
+
+                    config.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            if (context.Request.Query.ContainsKey("access_token"))
+                            {
+                                context.Token = context.Request.Query["access_token"];
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                     config.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidIssuer = Constants.Issuer,
