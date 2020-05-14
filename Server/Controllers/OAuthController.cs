@@ -1,5 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
@@ -9,7 +16,7 @@ namespace Server.Controllers
         public IActionResult Authorize(
             string response_type, // authorization flow type
             string client_id, // client id
-            string redirect_uri, 
+            string redirect_uri,
             string scope, // what information i wang => email,tel...
             string state) // random string generated to confirm that we are going back to the same client
         {
@@ -31,14 +38,44 @@ namespace Server.Controllers
             query.Add("state", state);
             return Redirect($"{redirectUri}{query.ToString()}");
         }
-        public IActionResult Token(
+        public async Task<IActionResult> Token(
             string grant_type,// flow of access_token request
             string code,//confirmation of the authentication
-            string redirect_url,
+            string redirect_uri,
             string client_id)
         {
-            //some mechanism for validating the code
-            return View();
+
+            var claims = new[]
+           {
+                new Claim(JwtRegisteredClaimNames.Sub, "some_id"),
+                new Claim("customClaim", "CustClaim")
+            };
+            var bytes = Encoding.UTF8.GetBytes(Constants.Secret);
+            var key = new SymmetricSecurityKey(bytes);
+            var algorithm = SecurityAlgorithms.HmacSha256Signature;
+
+            var signingCredentials = new SigningCredentials(key, algorithm);
+
+            var token = new JwtSecurityToken(
+                Constants.Issuer,
+                Constants.Audience,
+                claims,
+                notBefore: DateTime.Now,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials
+                );
+            var access_token = new JwtSecurityTokenHandler().WriteToken(token);
+            var responseObject = new
+            {
+                access_token,
+                token_type = "Bearer",
+                raw_claim = "oauthClaim"
+            };
+            var serializedObj = JsonConvert.SerializeObject(responseObject);
+            var responseBytes = Encoding.UTF8.GetBytes(serializedObj);
+            await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length);
+
+            return Redirect(redirect_uri);
         }
     }
 }

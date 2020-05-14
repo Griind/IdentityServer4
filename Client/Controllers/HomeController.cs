@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Client.Controllers
 {
@@ -10,8 +12,9 @@ namespace Client.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult Secret()
+        public async Task<IActionResult> Secret()
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
             return View();
         }
     }
