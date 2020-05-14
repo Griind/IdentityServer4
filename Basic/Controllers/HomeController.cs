@@ -70,7 +70,7 @@ namespace Basic.Controllers
             {
                 new Claim(ClaimTypes.Name, "Vasa Pupkin"),
                 new Claim("DrivingRecord", "A+")
-        };
+            };
             var mainIdentity = new ClaimsIdentity(mainClaims, "someIdentity");
             var licenseIdentity = new ClaimsIdentity(licenseClaims, "licenseIdentity");
 
